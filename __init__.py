@@ -59,14 +59,38 @@ class HPDialog(QDialog):
             cnt += 1
 
         all_text = " ".join(all_texts)
-        all_text = re.sub("::|/", " ", all_text)
-        all_text = re.sub("title|style|class|height|source|width|paste|figure", " ", all_text)
+        #all_text = str(all_text).encode("utf8").decode("utf8")
+
+        # remove clozes
         all_text = re.sub("{{c\d+::|}}", "", all_text)
+        all_text = re.sub("::|/", " ", all_text)
+
+        # html
+        all_text = re.sub("src=\".*?\"", " ", all_text)
+        all_text = re.sub("src='.*?'", " ", all_text)
+        all_text = re.sub("&nbsp|&nbsp;", " ", all_text)
+        all_text = re.sub("\\n", " ", all_text)
+        all_text = re.sub("<br>|<br|<div>|<div|<span>|<div", " ", all_text)
+        all_text = re.sub("<|>", " ", all_text)
+        all_text = re.sub("title|style|class|height|source|width|paste|figure"
+                , " ", all_text)
+
+        # lang
+        all_text = re.sub("d'|l'|\+|=", " ", all_text)
         all_text = re.sub("é|è|ê", "e", all_text)
+        all_text = re.sub("ç", "c", all_text)
+        all_text = re.sub("ï", "c", all_text)
         all_text = re.sub("à", "a", all_text)
+
+        # misc
+        all_text = re.sub("/|\"|'|!|\?|\.|\(|\)|-", " ", all_text)
         all_text = all_text.lower()
-        alphaNumeric = re.compile("[a-zA-ZÀ-ú][a-zA-ZÀ-ú]{4,25}")
+
+        alphaNumeric = re.compile("[a-zÀ-ú][a-zÀ-ú]{4,30}")
         words = [w for w in alphaNumeric.findall(all_text)]
+        #words = all_text.split(" ")
+        #words.remove('')
+
         count = Counter(words)
         doneText = str(pprint.pformat(count))
         tlabel = QLabel("Hapax Predator :\nHere are the words from your "\
@@ -75,17 +99,14 @@ class HPDialog(QDialog):
         top_hbox = QHBoxLayout()
         top_hbox.addWidget(tlabel)
         top_hbox.insertStretch(1, stretch=1)
-
         self.tedit = QPlainTextEdit(doneText)
         self.tedit.setTabChangesFocus(True)
         button_box = QDialogButtonBox(Qt.Horizontal, self)
         close_btn = button_box.addButton("&Close",
                                          QDialogButtonBox.RejectRole)
         close_btn.clicked.connect(self.close)
-
         bottom_hbox = QHBoxLayout()
         bottom_hbox.addWidget(button_box)
-
         vbox_main = QVBoxLayout()
         vbox_main.addLayout(top_hbox)
         vbox_main.addWidget(self.tedit)
@@ -111,3 +132,5 @@ def setupMenu(browser):
     a.triggered.connect(lambda _, b=browser: HP(b))
 
 addHook("browser.setupMenus", setupMenu)
+
+
