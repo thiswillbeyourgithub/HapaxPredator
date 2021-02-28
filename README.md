@@ -5,6 +5,7 @@
 * When summoned, the Hapax Predator will show you all the words found in the current selection of cards, ordered by frequency. This allows to find the least used words, which are propably misssssspelings.
 * The words are separated using a small series of python scripts and will very probably missbehave because of accents and such, don't hesitate to open an issue in case anything goes wrong.
 * If you make a modification to this code, please tell me so that I can (maybe) implement it for everyone else! Thank you! I don't know any QT and only python so don't hesitate!
+    ![picture](HapaxPredator.png)
 
 ### Know issues :
 * NONE!
@@ -12,7 +13,6 @@
 ### TODO :
 * Nothing. Suggestions are welcome, just open an issue.
 
-![picture](HapaxPredator.png)
 
 ## FAQ :
 * **But WHY!** Fixing misspellings is a first step towards managing NLP tasks in anki. Stay tunend.
