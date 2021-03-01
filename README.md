@@ -8,10 +8,10 @@
     ![picture](HapaxPredator.png)
 
 ### Know issues :
-* NONE!
+* Not really sure all the text preprocessing happens correctly as the final one is a catch all anyway. Someone with experience in text encodings is welcome as I'm note sure there's not some accentueted words that are not recognized but I don't really want to embed unicode into my code. Help appreciated.
 
 ### TODO :
-* Nothing. Suggestions are welcome, just open an issue.
+* Waiting for user feedbacks. Suggestions are welcome, just open an issue.
 
 
 ## FAQ :
