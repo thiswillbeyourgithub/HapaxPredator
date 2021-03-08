@@ -16,7 +16,7 @@
 
 
 ## FAQ :
-* **But WHY!** Fixing misspellings is a first step towards managing NLP tasks in anki. Stay tunend.
+* **But WHY!** Fixing misspellings is a first step towards managing NLP tasks in anki. Stay tuned. Another use would be to help have better matching when using the great [Pop Up Dictionnary Addon](https://ankiweb.net/shared/info/153625306)
 * **How can I use it ?** Open the browser > select cards > click on `Edit` then `Hapax Predator`
 * **Why this name?** It's a play on words, an hapax is a word that appears only once in a text and an apex predator is the one on top of the food chain.
 * **How can I install it?** Follow this link : https://ankiweb.net/shared/info/1495282885
