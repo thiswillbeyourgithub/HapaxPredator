@@ -48,18 +48,14 @@ class HPDialog(QDialog):
     def _setup(self):
         browser = self.browser
         nids = self.nids
-        fld = "Body"
         mw = browser.mw
         mw.checkpoint("Hapax Predator")
-        cnt = 0
-        all_texts=[]
+        all_texts = []
         for nid in nids:
             note = mw.col.getNote(nid)
             all_texts.extend(note.fields)
-            cnt += 1
 
         all_text = " ".join(all_texts)
-        #all_text = str(all_text).encode("utf8").decode("utf8")
 
         # remove clozes
         all_text = re.sub("{{c\d+::|}}", "", all_text)
@@ -72,8 +68,8 @@ class HPDialog(QDialog):
         all_text = re.sub("\\n", " ", all_text)
         all_text = re.sub("<br>|<br|<div>|<div|<span>|<div", " ", all_text)
         all_text = re.sub("<|>", " ", all_text)
-        all_text = re.sub("title|style|class|height|source|width|paste|figure"
-                , " ", all_text)
+        all_text = re.sub("title|style|class|height|source|width|paste|figure",
+                          " ", all_text)
 
         # lang
         all_text = re.sub("d'|l'|\+|=", " ", all_text)
@@ -88,13 +84,11 @@ class HPDialog(QDialog):
 
         alphaNumeric = re.compile("[a-zÀ-ú][a-zÀ-ú]{4,30}")
         words = [w for w in alphaNumeric.findall(all_text)]
-        #words = all_text.split(" ")
-        #words.remove('')
 
         count = Counter(words)
         doneText = str(pprint.pformat(count))
         tlabel = QLabel("Hapax Predator :\nHere are the words from your "\
-            + "cards  by frequency\nUse it to correct mistakes")
+                        + "cards  by frequency\nUse it to correct mistakes")
 
         top_hbox = QHBoxLayout()
         top_hbox.addWidget(tlabel)
@@ -117,6 +111,7 @@ class HPDialog(QDialog):
         self.setMinimumHeight(400)
         self.setWindowTitle("Hapax Predator")
 
+
 def HP(browser):
     nids = browser.selectedNotes()
     if not nids:
@@ -125,11 +120,13 @@ def HP(browser):
     dialog = HPDialog(browser, nids)
     dialog.exec_()
 
+
 def setupMenu(browser):
     menu = browser.form.menuEdit
     menu.addSeparator()
     a = menu.addAction('Hapax Predator')
     a.triggered.connect(lambda _, b=browser: HP(b))
+
 
 addHook("browser.setupMenus", setupMenu)
 
