@@ -22,4 +22,4 @@
 * **Why this name?** It's a play on words, an hapax is a word that appears only once in a text and an apex predator is the one on top of the food chain.
 * **How can I install it?** Follow this link : https://ankiweb.net/shared/info/1495282885
 * **Should I open an issue if X?** Of course please do, I am very eager to get feedbacks and am very early to all this.
-* **What happenned to my accents?** I decided to ignore as many accents as possible (for example `é` got turned into `e`) because I create way too many cards to care about them.
+* **What happened to my accents?** I decided to ignore as many accents as possible (for example `é` got turned into `e`) because I create way too many cards to care about them.
