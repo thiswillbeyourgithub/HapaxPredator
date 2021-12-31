@@ -7,6 +7,7 @@
 * If you make a modification to this code, please tell me so that I can (maybe) implement it for everyone else! Thank you! I don't know any QT and only python so don't hesitate!
 * Please tell me if you find anything weird, especially because of languages, accents, encodings etc. That would be very appreciated!
     ![picture](HapaxPredator.png)
+* **I have not uploaded the latest version to anki. I know it works at least until anki 2.1.44.**
 
 ### Know issues :
 * Not really sure all the text preprocessing happens correctly as the final one is a catch all anyway. Someone with experience in text encodings is welcome as I'm note sure there's not some accentuated words that are not recognized but I don't really want to embed UNICODE into my code. Help appreciated.
