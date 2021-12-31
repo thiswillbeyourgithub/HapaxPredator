@@ -35,6 +35,7 @@ from collections import Counter
 
 from aqt.qt import *
 from aqt.utils import tooltip
+from anki.utils import stripHTML
 from anki.hooks import addHook
 
 
@@ -57,43 +58,42 @@ class HPDialog(QDialog):
 
         all_text = " ".join(all_texts)
 
-        # remove clozes
-        all_text = re.sub("{{c\d+::|}}", "", all_text)
-        all_text = re.sub("::|/", " ", all_text)
+        all_text = stripHTML(all_text.lower())
+        all_text = re.sub(r"\W|\d", " ", all_text)
 
-        # html
-        all_text = re.sub("src=\".*?\"", " ", all_text)
-        all_text = re.sub("src='.*?'", " ", all_text)
-        all_text = re.sub("&nbsp|&nbsp;", " ", all_text)
-        all_text = re.sub("\\n", " ", all_text)
-        all_text = re.sub("<br>|<br|<div>|<div|<span>|<div", " ", all_text)
-        all_text = re.sub("<|>", " ", all_text)
-        all_text = re.sub("title|style|class|height|source|width|paste|figure",
-                          " ", all_text)
-
-        # lang
-        all_text = re.sub("d'|l'|\+|=", " ", all_text)
         all_text = re.sub("é|è|ê", "e", all_text)
         all_text = re.sub("ç", "c", all_text)
-        all_text = re.sub("ï", "c", all_text)
+        all_text = re.sub("ï", "i", all_text)
         all_text = re.sub("à", "a", all_text)
 
-        # misc
-        all_text = re.sub("/|\"|'|!|\?|\.|\(|\)|-", " ", all_text)
-        all_text = all_text.lower()
 
-        alphaNumeric = re.compile("[a-zÀ-ú][a-zÀ-ú]{4,30}")
+        alphaNumeric = re.compile("[a-zÀ-ú]{3,30}")
         words = [w for w in alphaNumeric.findall(all_text)]
 
         count = Counter(words)
-        doneText = str(pprint.pformat(count))
+
+        count_list = []
+        for word, cnt in count.items():
+            count_list.append([cnt, word])
+        count_list = sorted(count_list, key=lambda x: x[0], reverse=False)
+
+        lines = ["Index   |   Occurence   |   Word"]
+        for i, both in enumerate(count_list):
+            i += 1
+            cnt = both[0]
+            word = both[1]
+            lines.append(f"#{i:04d}:  {cnt:04d} : {word:<34}")
+        doneText = "\n".join(lines)
+
         tlabel = QLabel("Hapax Predator :\nHere are the words from your "\
                         + "cards  by frequency\nUse it to correct mistakes")
 
         top_hbox = QHBoxLayout()
         top_hbox.addWidget(tlabel)
         top_hbox.insertStretch(1, stretch=1)
-        self.tedit = QPlainTextEdit(doneText)
+        self.tedit = QTextEdit(self)
+        self.tedit.setReadOnly(True)
+        self.tedit.setText(doneText)
         self.tedit.setTabChangesFocus(True)
         button_box = QDialogButtonBox(Qt.Horizontal, self)
         close_btn = button_box.addButton("&Close",
@@ -129,5 +129,3 @@ def setupMenu(browser):
 
 
 addHook("browser.setupMenus", setupMenu)
-
-
