@@ -71,35 +71,36 @@ class HPDialog(QDialog):
 
         all_text = " ".join(all_texts).strip()
 
+        if all_text == "":
+            doneText = "No text found, wrong field name?"
 
-        all_text = " ".join(all_texts)
+        else:
+            all_text = stripHTML(all_text.lower())
+            all_text = re.sub(r"\W|\d", " ", all_text)
 
-        all_text = stripHTML(all_text.lower())
-        all_text = re.sub(r"\W|\d", " ", all_text)
-
-        all_text = re.sub("é|è|ê", "e", all_text)
-        all_text = re.sub("ç", "c", all_text)
-        all_text = re.sub("ï", "i", all_text)
-        all_text = re.sub("à", "a", all_text)
+            all_text = re.sub("é|è|ê", "e", all_text)
+            all_text = re.sub("ç", "c", all_text)
+            all_text = re.sub("ï", "i", all_text)
+            all_text = re.sub("à", "a", all_text)
 
 
-        alphaNumeric = re.compile("[a-zÀ-ú]{3,30}")
-        words = [w for w in alphaNumeric.findall(all_text)]
+            alphaNumeric = re.compile("[a-zÀ-ú]{3,30}")
+            words = [w for w in alphaNumeric.findall(all_text)]
 
-        count = Counter(words)
+            count = Counter(words)
 
-        count_list = []
-        for word, cnt in count.items():
-            count_list.append([cnt, word])
-        count_list = sorted(count_list, key=lambda x: x[0], reverse=False)
+            count_list = []
+            for word, cnt in count.items():
+                count_list.append([cnt, word])
+            count_list = sorted(count_list, key=lambda x: x[0], reverse=False)
 
-        lines = ["Rank / Frequency / Word"]
-        for i, both in enumerate(count_list):
-            i += 1
-            cnt = both[0]
-            word = both[1]
-            lines.append(f"#{i:04d}:  {cnt:04d} : {word:<34}")
-        doneText = "\n".join(lines)
+            lines = ["Rank / Frequency / Word"]
+            for i, both in enumerate(count_list):
+                i += 1
+                cnt = both[0]
+                word = both[1]
+                lines.append(f"#{i:04d}:  {cnt:04d} : {word:<34}")
+            doneText = "\n".join(lines)
 
         tlabel = QLabel("Hapax Predator :\nHere are the words from your "\
                         + "cards  by frequency\nUse it to correct mistakes")
