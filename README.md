@@ -13,7 +13,6 @@
 * Not really sure all the text preprocessing happens correctly as the final one is a catch all anyway. Someone with experience in text encodings is welcome as I'm not sure there's not some accentuated words that are not recognized but I don't really want to embed UNICODE into my code. Help appreciated.
 
 ### TODO :
-* better separation of words from cards using content from my own AMiMA repository.
 * Waiting for user feedbacks. Suggestions are welcome, just open an issue.
 
 
