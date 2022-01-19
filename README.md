@@ -10,7 +10,7 @@
 * **So far, this has been tested between version 2.1.35 and 2.1.49.**
 
 ### Know issues :
-* Not really sure all the text preprocessing happens correctly as the final one is a catch all anyway. Someone with experience in text encodings is welcome as I'm note sure there's not some accentuated words that are not recognized but I don't really want to embed UNICODE into my code. Help appreciated.
+* Not really sure all the text preprocessing happens correctly as the final one is a catch all anyway. Someone with experience in text encodings is welcome as I'm not sure there's not some accentuated words that are not recognized but I don't really want to embed UNICODE into my code. Help appreciated.
 
 ### TODO :
 * better separation of words from cards using content from my own AMiMA repository.
@@ -19,7 +19,7 @@
 
 ## FAQ :
 * **But WHY!** Fixing misspellings is a first step towards managing NLP tasks in anki. Stay tuned. Another use would be to help have better matching when using the great [Pop Up Dictionary Addon](https://ankiweb.net/shared/info/153625306)
-* **How can I use it ?** Open the browser > select cards > click on `Edit` then `Hapax Predator`
+* **How can I use it ?** Open the browser > select some cards > click on `Edit` then `Hapax Predator`
 * **Why this name?** It's a play on words, an hapax is a word that appears only once in a text and an apex predator is the one on top of the food chain.
 * **How can I install it?** Follow this link : https://ankiweb.net/shared/info/1495282885
 * **Should I open an issue if X?** Of course please do, I am very eager to get feedbacks and am very early to all this.

@@ -77,7 +77,7 @@ class HPDialog(QDialog):
             count_list.append([cnt, word])
         count_list = sorted(count_list, key=lambda x: x[0], reverse=False)
 
-        lines = ["Index   |   Occurence   |   Word"]
+        lines = ["Rank / Frequency / Word"]
         for i, both in enumerate(count_list):
             i += 1
             cnt = both[0]
