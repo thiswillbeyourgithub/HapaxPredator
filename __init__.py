@@ -102,8 +102,8 @@ class HPDialog(QDialog):
                 lines.append(f"#{i:04d}:  {cnt:04d} : {word:<34}")
             doneText = "\n".join(lines)
 
-        tlabel = QLabel("Hapax Predator :\nHere are the words from your "\
-                        + "cards  by frequency\nUse it to correct mistakes")
+        tlabel = QLabel("Hapax Predator :\nHere are the words from your \
+cards  by frequency\nUse it to correct mistakes")
 
         top_hbox = QHBoxLayout()
         top_hbox.addWidget(tlabel)
