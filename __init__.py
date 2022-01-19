@@ -52,9 +52,25 @@ class HPDialog(QDialog):
         mw = browser.mw
         mw.checkpoint("Hapax Predator")
         all_texts = []
+        selected_fields = "Body,Header".split(",")  # testing
         for nid in nids:
             note = mw.col.getNote(nid)
-            all_texts.extend(note.fields)
+            if selected_fields != [""]:
+                model = note.note_type()
+                fields = {}
+                for info in model['flds']:
+                    order = info['ord']
+                    name = info['name']
+                    fields[name] =  note.fields[order]
+
+                for field, content in fields.items():
+                    if field in selected_fields:
+                        all_texts.append(content)
+            else:
+                all_texts.extend(note.fields)
+
+        all_text = " ".join(all_texts).strip()
+
 
         all_text = " ".join(all_texts)
 
