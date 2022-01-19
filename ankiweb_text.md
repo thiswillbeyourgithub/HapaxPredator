@@ -1,6 +1,5 @@
-<h1>Hapax Predator</h1>
-
-<h2>Gist : display words used by frequency, this helps to find misspelings.</h2>
+<b>Hapax Predator</b>
+<b>Gist : display words used by frequency, this helps to find misspelings.</b>
 
 
 <b>* More information at this link <a href="https://github.com/thiswillbeyourgithub/HapaxPredator" rel="nofollow">HapaxPredator</a></b>
