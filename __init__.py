@@ -40,19 +40,21 @@ from anki.hooks import addHook
 
 
 class HPDialog(QDialog):
-    def __init__(self, browser, nids):
+    def __init__(self, browser, nids, selected_fields=""):
         QDialog.__init__(self, parent=browser)
         self.browser = browser
         self.nids = nids
+        self.selected_fields = selected_fields
+        self.gather_text()
         self._setup()
 
-    def _setup(self):
+    def gather_text(self):
         browser = self.browser
         nids = self.nids
         mw = browser.mw
         mw.checkpoint("Hapax Predator")
         all_texts = []
-        selected_fields = "Body,Header".split(",")  # testing
+        selected_fields = self.selected_fields.split(",")
         for nid in nids:
             note = mw.col.getNote(nid)
             if selected_fields != [""]:
@@ -101,32 +103,56 @@ class HPDialog(QDialog):
                 word = both[1]
                 lines.append(f"#{i:04d}:  {cnt:04d} : {word:<34}")
             doneText = "\n".join(lines)
+        self.doneText = doneText
 
-        tlabel = QLabel("Hapax Predator :\nHere are the words from your \
-cards  by frequency\nUse it to correct mistakes")
+    def _setup(self):
+        message = "Hapax Predator\nHere are the words from your \
+cards  by frequency.\nUse it to correct mistakes.\n\nFormat:\n\
+#Rank: number of match : word"
+        if self.selected_fields != "":
+            message += f"\n\nRestricted to fields: '{self.selected_fields.replace(',', ', ')}'"
+        tlabel = QLabel(message)
 
         top_hbox = QHBoxLayout()
         top_hbox.addWidget(tlabel)
         top_hbox.insertStretch(1, stretch=1)
+
+        self.lineEdit = QLineEdit(self)
+        self.lineEdit.resize(self.lineEdit.sizeHint())
+        self.lineEdit.setToolTip("Selected only fields separated by a comma, eg: \
+Body,Header,source")
+
         self.tedit = QTextEdit(self)
         self.tedit.setReadOnly(True)
-        self.tedit.setText(doneText)
+        self.tedit.setText(self.doneText)
         self.tedit.setTabChangesFocus(True)
+
         button_box = QDialogButtonBox(Qt.Horizontal, self)
         close_btn = button_box.addButton("&Close",
                                          QDialogButtonBox.RejectRole)
         close_btn.clicked.connect(self.close)
+
+        refresh_btn = button_box.addButton("&Filter to specific fields", QDialogButtonBox.ResetRole)
+        refresh_btn.clicked.connect(self.refresh_fields)
+
         bottom_hbox = QHBoxLayout()
         bottom_hbox.addWidget(button_box)
         vbox_main = QVBoxLayout()
         vbox_main.addLayout(top_hbox)
         vbox_main.addWidget(self.tedit)
+        vbox_main.addWidget(self.lineEdit)
         vbox_main.addLayout(bottom_hbox)
         self.setLayout(vbox_main)
-        self.tedit.setFocus()
+        self.lineEdit.setFocus()
         self.setMinimumWidth(540)
         self.setMinimumHeight(400)
         self.setWindowTitle("Hapax Predator")
+        self.show()
+
+    def refresh_fields(self):
+        HPDialog(self.browser, self.nids, selected_fields = self.lineEdit.text())
+        self.close()
+
 
 
 def HP(browser):
